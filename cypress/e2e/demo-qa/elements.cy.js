@@ -1,5 +1,6 @@
 import TextBoxPage from "../../pageObjects/textBoxPage";
 import CheckboxPage from "../../pageObjects/checkboxPage";
+import RadioButtonsPage from "../../pageObjects/radioButtonsPage";
 
 context("Elements Page", () => {
   context("Text box scenarios", () => {
@@ -23,13 +24,12 @@ context("Elements Page", () => {
     });
   });
 
-  context.only("Check box scenarios", () => {
+  context("Check box scenarios", () => {
     beforeEach(()=> {
       CheckboxPage.visit();
       CheckboxPage.expand.click();
     });
     it("Validate clicked checkboxes", () => {
-      CheckboxPage.expand.click();
       CheckboxPage.notes.click();
       CheckboxPage.react.click();
       CheckboxPage.angular.click();
@@ -62,6 +62,16 @@ context("Elements Page", () => {
   });
 
   context("Radio button scenarios", () => {
+    beforeEach(() => {
+      RadioButtonsPage.visit();
+    })
+    it ("Radio button test", () => {
+      RadioButtonsPage.yes.click({force: true});
+      RadioButtonsPage.message.should("contain.text", "Yes");
+      RadioButtonsPage.impressive.click({force: true});
+      RadioButtonsPage.message.should("contain.text", "Impressive");
+      RadioButtonsPage.no.should("have.disabled", "true");
+    })
     // Create RadioButtons page object
     // Scenario 1:
     // Click yesButton
