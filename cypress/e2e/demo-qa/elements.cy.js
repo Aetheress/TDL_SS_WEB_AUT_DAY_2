@@ -1,6 +1,7 @@
 import TextBoxPage from "../../pageObjects/textBoxPage";
 import CheckboxPage from "../../pageObjects/checkboxPage";
 import RadioButtonsPage from "../../pageObjects/radioButtonsPage";
+import WebTablesPage from "../../pageObjects/webTablesPage";
 
 context("Elements Page", () => {
   context("Text box scenarios", () => {
@@ -8,9 +9,6 @@ context("Elements Page", () => {
       TextBoxPage.visit();
     });
     
-    // Create texbox scenario
-    // fill in textboxes with necessary information
-    // validate the paragraphs
     it("Filling in Text Boxes", () => {
       TextBoxPage.fullName.type("Ulvis Blathens")
       TextBoxPage.email.type("ulvis.blathens@gmail.com");
@@ -49,16 +47,6 @@ context("Elements Page", () => {
       CheckboxPage.classified.should("have.class", "rct-icon-check");
       CheckboxPage.general.should("have.class", "rct-icon-check");
     })
-    // Create CheckBoxPage page object
-    // Create checkbox scenario 1:
-    // Click the "+"/expand button
-    // Click Notes, React, Angular, General, Excel File.doc
-    // Validate the clicked checkboxes
-
-    // Create checkbox scenario 2:
-    // Click expand button
-    // Click Office
-    // Validate the checked checkboxes
   });
 
   context("Radio button scenarios", () => {
@@ -72,16 +60,29 @@ context("Elements Page", () => {
       RadioButtonsPage.message.should("contain.text", "Impressive");
       RadioButtonsPage.no.should("have.disabled", "true");
     })
-    // Create RadioButtons page object
-    // Scenario 1:
-    // Click yesButton
-    // validate the message
-    // click impressiveButton
-    // validate the message
-    // noButton - validate that the button exists but is disabled
   });
 
-  context("Web tables scenarios", () => {
+  context.only("Web tables scenarios", () => {
+    beforeEach(() => {
+      WebTablesPage.visit();
+    })
+    it("Add record test", () => {
+      WebTablesPage.add.click();
+      WebTablesPage.firstName.type("Ulvis");
+      WebTablesPage.lastName.type("Blathens");
+      WebTablesPage.email.type("ulvis.blathens@gmail.com");
+      WebTablesPage.age.type("24");
+      WebTablesPage.salary.type("0");
+      WebTablesPage.department.type("LDK");
+      WebTablesPage.submit.click();
+      WebTablesPage.searchInput.type("Ulvis");
+      WebTablesPage.firstRow.should("have.text", "Ulvis");
+    })
+    it("Delete records test", () => {
+      ['Cierra', 'Alden', 'Kierra'].forEach((name) => {
+        WebTablesPage.deleteUser(name);
+      })
+    })
     // Create WebTables page object
     // Create scenario 1:
     // Click add record button
